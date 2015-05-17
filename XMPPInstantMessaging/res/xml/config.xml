@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource>
+    <host1>192.168.0.134</host1><!-- 服务器地址 1-->
+    <host2>172.16.6.59</host2><!-- 服务器地址 2 -->
+    <serviceName>127.0.0.1</serviceName><!-- 服务器名称 -->
+</resource>
