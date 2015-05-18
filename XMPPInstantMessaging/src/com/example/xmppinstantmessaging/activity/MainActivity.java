@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.widget.TextView;
 
 import com.example.xmppinstantmessaging.R;
+import com.example.xmppinstantmessaging.application.XMPPApplication;
 
 public class MainActivity extends Activity {
 
@@ -15,7 +16,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
         tv = (TextView) findViewById(R.id.tv);
     }
 
@@ -27,4 +27,10 @@ public class MainActivity extends Activity {
         return true;
     }
     
+    @Override
+    protected void onDestroy() {
+    	// TODO Auto-generated method stub
+    	super.onDestroy();
+    	XMPPApplication.disconnect();
+    }
 }
