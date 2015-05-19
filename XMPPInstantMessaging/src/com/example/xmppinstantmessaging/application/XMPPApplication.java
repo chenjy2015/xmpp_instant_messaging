@@ -3,15 +3,19 @@ package com.example.xmppinstantmessaging.application;
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-import com.example.xmppinstantmessaging.R;
+
 import android.app.Application;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import com.example.xmppinstantmessaging.R;
+import com.example.xmppinstantmessaging.object.UserInfor;
 
 public class XMPPApplication extends Application {
 
@@ -23,19 +27,22 @@ public class XMPPApplication extends Application {
 	public static String mHost = ""; // 服务器偏好设置(地址)
 	public static int mPort = 5222; // 服务器连接端口号
 	public static String mServiceName = ""; // 服务器名称
-	public static ScheduledExecutorService mExecutors;
+	public static ScheduledExecutorService mExecutors; //线程池
 	public static final int XMPPCONNECT_SUCCESS = 10001;// 连接成功
 	public static final int XMPPCONNECT_FAIL = 10002;// 连接失败
 	public static final int XMPPCONNECT_ONE = 10; // 连接服务器第一个偏好设置
 	public static final int XMPPCONNECT_TWO = 11; // 连接服务器第二个偏好设置
-
+	
+	public static UserInfor mCurrentUser;
+	
+	
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-
 		loadXMLConfig();
 		mExecutors = Executors.newScheduledThreadPool(3);// 初始化线程池
+		mCurrentUser = new UserInfor();//初始化全局用户信息对象
 		startConnectService();
 	}
 
@@ -113,7 +120,7 @@ public class XMPPApplication extends Application {
 	};
 
 	// 连接服务器 1
-	private void startConnectService() {
+	protected void startConnectService() {
 		mHost = mHost1;// 先连host1,如果连不上,就连host2
 		mExecutors.submit(new startConnectThread());
 	}
