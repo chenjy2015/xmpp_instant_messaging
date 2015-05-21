@@ -87,7 +87,7 @@ public class XMPPApplication extends Application {
 	}
 
 	// 连接结果回调
-	private Handler mHandler = new Handler() {
+	private static Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(android.os.Message msg) {
 			int connectType = msg.arg2;
@@ -120,13 +120,13 @@ public class XMPPApplication extends Application {
 	};
 
 	// 连接服务器 1
-	protected void startConnectService() {
+	public static void startConnectService() {
 		mHost = mHost1;// 先连host1,如果连不上,就连host2
 		mExecutors.submit(new startConnectThread());
 	}
 
 	// 连接服务器2
-	private void startConnectServiceAnother() {
+	public static void startConnectServiceAnother() {
 		mHost = mHost2;
 		mExecutors.submit(new startConnectAotherThread());
 	}
@@ -137,7 +137,7 @@ public class XMPPApplication extends Application {
 	 * @author Administrator
 	 * 
 	 */
-	private class startConnectThread implements Runnable {
+	private static class startConnectThread implements Runnable {
 
 		public startConnectThread() {
 			// 参数 1服务器地址 2端口号 3服务器名称
@@ -155,6 +155,11 @@ public class XMPPApplication extends Application {
 					Log.d("mXmppConnection",
 							"host: " + mHost + " \t isConnected :"
 									+ mXmppConnection.isConnected());
+					Message msg = Message.obtain();
+					msg.arg1 = XMPPCONNECT_SUCCESS;
+					msg.arg2 = XMPPCONNECT_ONE;
+					msg.obj = "success";
+					mHandler.handleMessage(msg);
 				}
 
 			} catch (Exception e) {
@@ -175,7 +180,7 @@ public class XMPPApplication extends Application {
 	 * @author Administrator
 	 * 
 	 */
-	private class startConnectAotherThread implements Runnable {
+	private static class startConnectAotherThread implements Runnable {
 
 		public startConnectAotherThread() {
 			mConnectionConfig = new ConnectionConfiguration(mHost, mPort,
@@ -192,6 +197,11 @@ public class XMPPApplication extends Application {
 					Log.d("mXmppConnection",
 							"host: " + mHost + " \t isConnected :"
 									+ mXmppConnection.isConnected());
+					Message msg = Message.obtain();
+					msg.arg1 = XMPPCONNECT_SUCCESS;
+					msg.arg2 = XMPPCONNECT_TWO;
+					msg.obj = "success";
+					mHandler.handleMessage(msg);
 				}
 
 			} catch (Exception e) {

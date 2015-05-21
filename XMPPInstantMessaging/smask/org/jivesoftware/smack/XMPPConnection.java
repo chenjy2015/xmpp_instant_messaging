@@ -223,6 +223,7 @@ public class XMPPConnection extends Connection {
         username = username.toLowerCase().trim();
 
         String response;
+        //SASL验证  如果登录失败 可以尝试关闭此验证
         if (config.isSASLAuthenticationEnabled() &&
                 saslAuthentication.hasNonAnonymousAuthentication()) {
             // Authenticate using SASL
@@ -239,7 +240,7 @@ public class XMPPConnection extends Connection {
             response = new NonSASLAuthentication(this).authenticate(username, password, resource);
         }
         
-        // ��Ҫ sasl��֤
+        //不做SASL验证
         //response = new NonSASLAuthentication(this).authenticate(username, password, resource);
 
         

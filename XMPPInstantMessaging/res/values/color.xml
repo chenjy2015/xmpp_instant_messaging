@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="blue_schedul">#79b5ec</color>
+    <!-- 红色 -->
+    <color name="red">#FF0000</color>
+    <!-- 白色 -->
+    <color name="white">#FFFFFF</color>
+    <!-- 黑色 -->
+    <color name="black">#888888</color>
+    <!-- 纯黑色 -->
+    <color name="black_pure">#000000</color>
+    <!-- 黄色 -->
+    <color name="yellow">#FFFF00</color>
+    <!-- 深蓝色 -->
+    <color name="blue_">#007bb0</color>
+    <!-- 蓝色 -->
+    <color name="blue">#3300FF</color>
+    <!-- 浅蓝色 -->
+    <color name="blue_litter">#008ECC</color>
+	<!-- 淡蓝色 -->
+    <color name="blue_litter_listter">#008aaa</color>
+    <!-- 绿色 -->
+    <color name="green">#00FF00</color>
+    <!-- 紫色 -->
+    <color name="violet">#6600FF</color>
+    <!-- 褐色 -->
+    <color name="brown">#714f16</color>
+    <!-- 灰色 -->
+    <color name="gray">#888888</color>
+    <!-- 浅灰色 -->
+    <color name="litte_gray">#e1e1e1</color>
+    <!-- 透明色 -->
+    <color name="dialogback">#7a510d</color>
+    <!-- 半透明色 -->
+    <color name="translucent">#e0000000</color>
+    <!-- 浅灰色 -->
+    <color name="litte_litte_gray">#a9a9a9</color>
+    <!-- 橙红色 -->
+    <color name="orange_red_startcolor">#ff63f0</color>
+
+</resources>

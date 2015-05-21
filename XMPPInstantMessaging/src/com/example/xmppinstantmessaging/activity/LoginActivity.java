@@ -1,6 +1,8 @@
 package com.example.xmppinstantmessaging.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,10 +12,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.xmppinstantmessaging.R;
-import com.example.xmppinstantmessaging.application.XMPPApplication;
 import com.example.xmppinstantmessaging.config.Config;
 import com.example.xmppinstantmessaging.helper.LoginHelper;
 import com.example.xmppinstantmessaging.object.UserInfor;
+
+
+
+/**
+ * 登录界面
+ * @author chenjy
+ * @create 2015/5/18
+ * 
+ */
 
 public class LoginActivity extends Activity implements View.OnClickListener {
 
@@ -22,6 +32,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 	private Button mLogin;
 	private LoginHelper loginHelper; // 登录辅助类
 	private UserInfor mUserInfor;
+	private AlertDialog mDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +72,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 			String checkOutStr = checkOut();
 			if (checkOutStr.equals("")) {
 				login();
+				showHint("温馨提示！", "正在登录中......", Config.Login.LOGIN_STATUS_LOGING);
 			} else {
 				Toast.makeText(getApplicationContext(), checkOutStr + "不能为空",
 						Toast.LENGTH_SHORT).show();
@@ -86,19 +98,49 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 		@Override
 		public void handleMessage(android.os.Message msg) {
 			int status = msg.arg1; 
-			String str = (String) msg.obj;
 			switch (status) {
 			case Config.Login.LOGIN_STATUS_SUCCESS:  //登陆成功！
-				XMPPApplication.mCurrentUser.setLogin(true);
+				dismissHint();
 				Intent intent = new Intent();
 				intent.setClass(getApplicationContext(), MainActivity.class);
 				startActivity(intent);
+				finish();
 				break;
 
 			case Config.Login.LOGIN_STATUS_FAIL:     //登陆失败!
-				
+			    showHint("温馨提示！", "登录失败 请检查网络是否连接或用户名,密码是否错误！", Config.Login.LOGIN_STATUS_FAIL);
 				break;
 			}
 		};
 	};
+	
+	
+	private void showHint(String title, String message, final int type){
+	
+		mDialog = new AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton("", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				switch (type) {
+				case Config.Login.LOGIN_STATUS_LOGING://正在登录
+					loginHelper.cancelLogin();
+					break;
+				case Config.Login.LOGIN_STATUS_FAIL://登录失败
+					
+					break;
+
+				}
+				dialog.dismiss();
+			}
+		}).create();
+		
+		mDialog.show();
+	}
+	
+	private void dismissHint(){
+		if(mDialog != null){
+			mDialog.dismiss();
+		}
+	}
 }

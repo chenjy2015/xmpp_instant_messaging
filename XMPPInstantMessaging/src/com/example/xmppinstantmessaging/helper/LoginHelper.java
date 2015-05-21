@@ -4,8 +4,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import org.jivesoftware.smack.XMPPException;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import com.example.xmppinstantmessaging.application.XMPPApplication;
+import com.example.xmppinstantmessaging.config.Config;
 import com.example.xmppinstantmessaging.object.UserInfor;
 
 public class LoginHelper {
@@ -59,13 +61,45 @@ public class LoginHelper {
 			
 			//开始登录
 			try {
+				String username = mUser.getUsername();
+				String password = mUser.getPassword();
+				Log.e("mXmppConnection.isConnected()", "登录信息："+"username:"+username+" \tpassword:"+password);
 				XMPPApplication.mXmppConnection.login(mUser.getUsername(), mUser.getPassword());
+				XMPPApplication.mCurrentUser.setLogin(true);
+				notifyLoginStatus(Config.Login.LOGIN_STATUS_SUCCESS);
 			} catch (XMPPException e) {
 				e.printStackTrace();
 				Log.e("mXmppConnection.isConnected()", "登录失败！"+e.getMessage());
+				notifyLoginStatus(Config.Login.LOGIN_STATUS_FAIL);
 			}
 			
 		}
-		
+	}
+	
+	/**
+	 * 取消登录
+	 */
+	public void cancelLogin(){
+		//先断开服务器连接 然后重连服务器
+		XMPPApplication.disconnect();
+		XMPPApplication.startConnectService();
+	}
+	
+	
+	/**
+	 * 通知主界面登录状态
+	 */
+	private void notifyLoginStatus(int status){
+		Message msg = Message.obtain();
+		switch (status) {
+		case Config.Login.LOGIN_STATUS_SUCCESS:
+			msg.arg1 = Config.Login.LOGIN_STATUS_SUCCESS;
+			break;
+
+		case Config.Login.LOGIN_STATUS_FAIL:
+			msg.arg1 = Config.Login.LOGIN_STATUS_FAIL;
+			break;
+		}
+		mHandler.sendMessage(msg);
 	}
 }

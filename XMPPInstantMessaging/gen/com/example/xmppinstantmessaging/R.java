@@ -13,6 +13,63 @@ public final class R {
     }
     public static final class attr {
     }
+    public static final class color {
+        /**  黑色 
+         */
+        public static final int black=0x7f060003;
+        /**  纯黑色 
+         */
+        public static final int black_pure=0x7f060004;
+        /**  蓝色 
+         */
+        public static final int blue=0x7f060007;
+        /**  深蓝色 
+         */
+        public static final int blue_=0x7f060006;
+        /**  浅蓝色 
+         */
+        public static final int blue_litter=0x7f060008;
+        /**  淡蓝色 
+         */
+        public static final int blue_litter_listter=0x7f060009;
+        public static final int blue_schedul=0x7f060000;
+        /**  褐色 
+         */
+        public static final int brown=0x7f06000c;
+        /**  透明色 
+         */
+        public static final int dialogback=0x7f06000f;
+        /**  灰色 
+         */
+        public static final int gray=0x7f06000d;
+        /**  绿色 
+         */
+        public static final int green=0x7f06000a;
+        /**  浅灰色 
+         */
+        public static final int litte_gray=0x7f06000e;
+        /**  浅灰色 
+         */
+        public static final int litte_litte_gray=0x7f060011;
+        /**  橙红色 
+         */
+        public static final int orange_red_startcolor=0x7f060012;
+        /**  红色 
+         */
+        public static final int red=0x7f060001;
+        /**  半透明色 
+         */
+        public static final int translucent=0x7f060010;
+        /**  紫色 
+         */
+        public static final int violet=0x7f06000b;
+        /**  白色 
+         */
+        public static final int white=0x7f060002;
+        /**  黄色 
+         */
+        public static final int yellow=0x7f060005;
+    }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
 
@@ -20,8 +77,8 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f060000;
-        public static final int activity_vertical_margin=0x7f060001;
+        public static final int activity_horizontal_margin=0x7f070000;
+        public static final int activity_vertical_margin=0x7f070001;
     }
     public static final class drawable {
         public static final int background_button_login=0x7f020000;
@@ -30,12 +87,12 @@ public final class R {
         public static final int selector_button_login_releast=0x7f020003;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0005;
-        public static final int ed_psw=0x7f0a0002;
-        public static final int ed_user=0x7f0a0001;
-        public static final int layout=0x7f0a0000;
-        public static final int login=0x7f0a0003;
-        public static final int tv=0x7f0a0004;
+        public static final int action_settings=0x7f0b0005;
+        public static final int ed_psw=0x7f0b0002;
+        public static final int ed_user=0x7f0b0001;
+        public static final int layout=0x7f0b0000;
+        public static final int login=0x7f0b0003;
+        public static final int tv=0x7f0b0004;
     }
     public static final class layout {
         public static final int activity_launcher=0x7f030000;
@@ -43,16 +100,16 @@ public final class R {
         public static final int activity_main=0x7f030002;
     }
     public static final class menu {
-        public static final int main=0x7f090000;
+        public static final int main=0x7f0a0000;
     }
     public static final class string {
-        public static final int action_settings=0x7f070001;
-        public static final int app_name=0x7f070000;
-        public static final int hello_world=0x7f070002;
-        public static final int login=0x7f070005;
-        public static final int password=0x7f070004;
-        public static final int username=0x7f070003;
-        public static final int welcome=0x7f070006;
+        public static final int action_settings=0x7f080001;
+        public static final int app_name=0x7f080000;
+        public static final int hello_world=0x7f080002;
+        public static final int login=0x7f080005;
+        public static final int password=0x7f080004;
+        public static final int username=0x7f080003;
+        public static final int welcome=0x7f080006;
     }
     public static final class style {
         /** 
@@ -76,11 +133,11 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseTheme=0x7f090000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080001;
+        public static final int AppTheme=0x7f090001;
     }
     public static final class xml {
         public static final int config=0x7f050000;

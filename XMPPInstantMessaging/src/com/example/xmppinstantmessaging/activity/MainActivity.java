@@ -7,6 +7,14 @@ import android.widget.TextView;
 import com.example.xmppinstantmessaging.R;
 import com.example.xmppinstantmessaging.application.XMPPApplication;
 
+
+
+/**
+ * 主界面
+ * @author chenjy
+ * @create 2015/5/18
+ * 
+ */
 public class MainActivity extends Activity {
 
 	private TextView tv;
@@ -28,6 +36,9 @@ public class MainActivity extends Activity {
     }
 
     
+    /**
+     * 程序退出前 关闭与服务器的连接
+     */
     @Override
     protected void onDestroy() {
     	// TODO Auto-generated method stub

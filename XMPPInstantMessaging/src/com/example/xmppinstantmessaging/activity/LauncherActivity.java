@@ -11,6 +11,13 @@ import android.widget.RelativeLayout;
 
 import com.example.xmppinstantmessaging.R;
 
+
+/**
+ * 启动界面
+ * @author chenjy
+ * @create 2015/5/18
+ * 
+ */
 public class LauncherActivity extends Activity {
 
 	RelativeLayout mLayout;
