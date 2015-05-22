@@ -87,12 +87,14 @@ public final class R {
         public static final int selector_button_login_releast=0x7f020003;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0005;
+        public static final int action_settings=0x7f0b0007;
         public static final int ed_psw=0x7f0b0002;
         public static final int ed_user=0x7f0b0001;
+        public static final int forget=0x7f0b0004;
         public static final int layout=0x7f0b0000;
         public static final int login=0x7f0b0003;
-        public static final int tv=0x7f0b0004;
+        public static final int register=0x7f0b0005;
+        public static final int tv=0x7f0b0006;
     }
     public static final class layout {
         public static final int activity_launcher=0x7f030000;
@@ -105,9 +107,11 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f080001;
         public static final int app_name=0x7f080000;
+        public static final int forget=0x7f080007;
         public static final int hello_world=0x7f080002;
         public static final int login=0x7f080005;
         public static final int password=0x7f080004;
+        public static final int register=0x7f080008;
         public static final int username=0x7f080003;
         public static final int welcome=0x7f080006;
     }
