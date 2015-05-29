@@ -15,11 +15,11 @@ import com.example.xmppinstantmessaging.R;
 import com.example.xmppinstantmessaging.config.Config;
 import com.example.xmppinstantmessaging.helper.LoginHelper;
 import com.example.xmppinstantmessaging.object.UserInfor;
-
-
+import com.example.xmppinstantmessaging.shared.SharedPreferenceHelper;
 
 /**
  * 登录界面
+ * 
  * @author chenjy
  * @create 2015/5/18
  * 
@@ -33,6 +33,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 	private LoginHelper loginHelper; // 登录辅助类
 	private UserInfor mUserInfor;
 	private AlertDialog mDialog;
+	private SharedPreferenceHelper sharedPreHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +44,29 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 		mEd_psw = (EditText) findViewById(R.id.ed_psw);
 		mLogin = (Button) findViewById(R.id.login);
 		mLogin.setOnClickListener(this);
-		mUserInfor = new UserInfor();
+		loginHelper = new LoginHelper(mHanlder);
+		sharedPreHelper = new SharedPreferenceHelper();
+		init();
 	}
+	
+	
+	/**
+	 * 初始化用户信息
+	 */
+	private void init(){
+		mUserInfor = sharedPreHelper.getUser(getApplicationContext());
+		if(mUserInfor == null){
+			mUserInfor = new UserInfor();
+		}else{
+			if(mUserInfor.getUsername() != null && !mUserInfor.getUsername().equals("")){
+				loginHelper.setUserInfor(mUserInfor);
+				login();
+				showHint("温馨提示！", "正在登录中......",
+						Config.Login.LOGIN_STATUS_LOGING);
+			}
+		}
+	}
+	
 
 	private String checkOut() {
 
@@ -71,8 +93,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 		case R.id.login:
 			String checkOutStr = checkOut();
 			if (checkOutStr.equals("")) {
+				loginHelper.setUserInfor(mUserInfor);
 				login();
-				showHint("温馨提示！", "正在登录中......", Config.Login.LOGIN_STATUS_LOGING);
+				showHint("温馨提示！", "正在登录中......",
+						Config.Login.LOGIN_STATUS_LOGING);
 			} else {
 				Toast.makeText(getApplicationContext(), checkOutStr + "不能为空",
 						Toast.LENGTH_SHORT).show();
@@ -81,66 +105,82 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 		}
 	}
 
-	//登陆
+	// 登陆
 	public void login() {
-		loginHelper = new LoginHelper(mHanlder, mUserInfor);
+		
 		loginHelper.Login();
 	}
 
-	
 	/**
-	 * Message 参数:
-	 * arg1  登录状态
-	 * obj  返回内容
+	 * Message 参数: arg1 登录状态 obj 返回内容
 	 */
 	public Handler mHanlder = new Handler() {
 
 		@Override
 		public void handleMessage(android.os.Message msg) {
-			int status = msg.arg1; 
+			int status = msg.arg1;
 			switch (status) {
-			case Config.Login.LOGIN_STATUS_SUCCESS:  //登陆成功！
-				dismissHint();
+			case Config.Login.LOGIN_STATUS_SUCCESS: // 登陆成功！
+				sharedPreHelper.saveUser(getApplicationContext(), mUserInfor);
 				Intent intent = new Intent();
 				intent.setClass(getApplicationContext(), MainActivity.class);
 				startActivity(intent);
 				finish();
 				break;
 
-			case Config.Login.LOGIN_STATUS_FAIL:     //登陆失败!
-			    showHint("温馨提示！", "登录失败 请检查网络是否连接或用户名,密码是否错误！", Config.Login.LOGIN_STATUS_FAIL);
+			case Config.Login.LOGIN_STATUS_FAIL: // 登陆失败!
+				showHint("温馨提示！", "登录失败 请检查网络是否连接或用户名,密码是否错误！",
+						Config.Login.LOGIN_STATUS_FAIL);
 				break;
 			}
 		};
 	};
-	
-	
-	private void showHint(String title, String message, final int type){
-	
-		mDialog = new AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton("", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				switch (type) {
-				case Config.Login.LOGIN_STATUS_LOGING://正在登录
-					loginHelper.cancelLogin();
-					break;
-				case Config.Login.LOGIN_STATUS_FAIL://登录失败
-					
-					break;
 
-				}
-				dialog.dismiss();
-			}
-		}).create();
-		
-		mDialog.show();
-	}
 	
-	private void dismissHint(){
-		if(mDialog != null){
+	
+	private void showHint(String title, String message, final int type) {
+		String positiveStr = "";
+		if(type == Config.Login.LOGIN_STATUS_LOGING){
+			positiveStr = "取消登录";
+		}else if(type == Config.Login.LOGIN_STATUS_FAIL){
+			positiveStr = "确定";
+		}
+		
+		if (mDialog == null) {
+			mDialog = new AlertDialog.Builder(this)
+					.setTitle(title)
+					.setMessage(message)
+					.setPositiveButton(positiveStr,
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									switch (type) {
+									case Config.Login.LOGIN_STATUS_LOGING:// 正在登录
+										loginHelper.cancelLogin();
+										break;
+									case Config.Login.LOGIN_STATUS_FAIL:// 登录失败
+
+										break;
+
+									}
+									dismissHint();
+								}
+							}).create();
+			mDialog.show();
+		} else {
+			mDialog.setTitle(title);
+			mDialog.setMessage(message);
+			mDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(positiveStr);
+		}
+	}
+
+	private void dismissHint() {
+		if (mDialog != null) {
 			mDialog.dismiss();
+			mDialog = null;
 		}
 	}
 }

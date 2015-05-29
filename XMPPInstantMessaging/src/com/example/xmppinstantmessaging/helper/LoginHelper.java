@@ -16,12 +16,14 @@ public class LoginHelper {
 	private Handler mHandler;
 	private UserInfor mUser;
 	
-	public LoginHelper(Handler handler, UserInfor userInfor){
+	public LoginHelper(Handler handler){
 		this.mHandler = handler;
 		this.mExecutors = Executors.newScheduledThreadPool(3);
-		this.mUser = userInfor;
 	}
 	
+	public void setUserInfor( UserInfor userInfor){
+		this.mUser = userInfor;
+	}
 	
 	public void Login(){
 		mExecutors.execute(new LogingThread());
