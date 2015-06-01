@@ -132,6 +132,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 				showHint("温馨提示！", "登录失败 请检查网络是否连接或用户名,密码是否错误！",
 						Config.Login.LOGIN_STATUS_FAIL);
 				break;
+			case Config.Login.LOGIN_STATUS_CONNECTED_FAIL: //服务器连接失败
+				showHint("温馨提示！", "服务器连接失败",
+						Config.Login.LOGIN_STATUS_CONNECTED_FAIL);
+				break;
 			}
 		};
 	};
@@ -143,6 +147,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 		if(type == Config.Login.LOGIN_STATUS_LOGING){
 			positiveStr = "取消登录";
 		}else if(type == Config.Login.LOGIN_STATUS_FAIL){
+			positiveStr = "确定";
+		}else if(type == Config.Login.LOGIN_STATUS_CONNECTED_FAIL){
 			positiveStr = "确定";
 		}
 		
@@ -163,6 +169,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 										break;
 									case Config.Login.LOGIN_STATUS_FAIL:// 登录失败
 
+										break;
+									case Config.Login.LOGIN_STATUS_CONNECTED_FAIL://服务器连接失败
+										
 										break;
 
 									}

@@ -59,6 +59,7 @@ public class LoginHelper {
 			//如果过了一分钟还没有连接上 报超时异常
 			if(XMPPApplication.mXmppConnection.isConnected() == false){
 				Log.e("mXmppConnection.isConnected()", "服务器连接失败！");
+				
 			}
 			
 			//开始登录
