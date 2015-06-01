@@ -32,7 +32,6 @@ public class XMPPApplication extends Application {
 	public static final int XMPPCONNECT_FAIL = 10002;// 连接失败
 	public static final int XMPPCONNECT_ONE = 10; // 连接服务器第一个偏好设置
 	public static final int XMPPCONNECT_TWO = 11; // 连接服务器第二个偏好设置
-	public static boolean isConnected;//标识服务器是否已经连接上
 	
 	public static UserInfor mCurrentUser;
 	
@@ -98,18 +97,14 @@ public class XMPPApplication extends Application {
 			switch (connectType) {
 			case XMPPCONNECT_ONE:
 				if (result == XMPPCONNECT_SUCCESS) {
-					isConnected = true;
 				} else {
 					startConnectServiceAnother();
-					isConnected = false;
 				}
 				break;
 
 			case XMPPCONNECT_TWO:
 				if (result == XMPPCONNECT_SUCCESS) {
-					isConnected = true;
 				} else {
-					isConnected = false;
 				}
 				break;
 			}

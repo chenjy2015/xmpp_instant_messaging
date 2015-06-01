@@ -43,23 +43,27 @@ public class LoginHelper {
 			
 			/**
 			 * 为避免xmppConnection没有连接上而报错,故在没连接上时,死循环阻塞线程
-			 * 每隔100毫秒,判断是否连接上,判断60秒
+			 * 每隔100毫秒,判断是否连接上,判断10秒
 			 * 1min后报超时
 			 */
-			while (count < 10 * 60 
-					&& XMPPApplication.mXmppConnection.isConnected() == false) {
-				try {
-					Thread.sleep(100);// 休眠100毫秒
-					count++;
-				} catch (InterruptedException e) {
-					
+			if( XMPPApplication.mXmppConnection.isConnected() == false){
+				XMPPApplication.startConnectService();
+				while (count < 10 * 10 
+						&& XMPPApplication.mXmppConnection.isConnected() == false) {
+					try {
+						Thread.sleep(100);// 休眠100毫秒
+						count++;
+					} catch (InterruptedException e) {
+						
+					}
 				}
 			}
 			
 			//如果过了一分钟还没有连接上 报超时异常
 			if(XMPPApplication.mXmppConnection.isConnected() == false){
 				Log.e("mXmppConnection.isConnected()", "服务器连接失败！");
-				
+				notifyLoginStatus(Config.Login.LOGIN_STATUS_CONNECTED_FAIL);
+				return ;
 			}
 			
 			//开始登录
@@ -95,12 +99,15 @@ public class LoginHelper {
 	private void notifyLoginStatus(int status){
 		Message msg = Message.obtain();
 		switch (status) {
-		case Config.Login.LOGIN_STATUS_SUCCESS:
+		case Config.Login.LOGIN_STATUS_SUCCESS://登录成功
 			msg.arg1 = Config.Login.LOGIN_STATUS_SUCCESS;
 			break;
 
-		case Config.Login.LOGIN_STATUS_FAIL:
+		case Config.Login.LOGIN_STATUS_FAIL: //用户名密码 验证失败
 			msg.arg1 = Config.Login.LOGIN_STATUS_FAIL;
+			break;
+		case Config.Login.LOGIN_STATUS_CONNECTED_FAIL: //服务器连接失败
+			msg.arg1 = Config.Login.LOGIN_STATUS_CONNECTED_FAIL;
 			break;
 		}
 		mHandler.sendMessage(msg);
